@@ -32,7 +32,7 @@ class Main {
 
         $this->connect();
         $this->type = $type;
-        $this->setting = mysqli_fetch_assoc($this->data->query("SELECT * FROM `tb_settings` LIMIT 1"));
+        $this->setting = mysqli_fetch_assoc($this->data->query("SELECT * FROM `cx_settings` LIMIT 1"));
 
         if($type == 'public'){
             if(isset($_COOKIE['idUser']) && isset($_COOKIE['access'])){
@@ -41,7 +41,7 @@ class Main {
             }
         } else if($type == 'private'){
             if(isset($_COOKIE['idUser']) && isset($_COOKIE['access'])){
-                $sql = $this->data->prepare("SELECT `lgnKey` FROM `tb_users` WHERE `idUser` = ?");
+                $sql = $this->data->prepare("SELECT `lgnToken` FROM `tb_users` WHERE `idUser` = ?");
                 $sql->bind_param('s', $_COOKIE['idUser']); $sql->execute();
                 $result = $sql->get_result();
 
@@ -98,7 +98,7 @@ class Main {
         <meta name='theme-color' content='#ffffff'/>
         <meta name='msapplication-TileColor' content='#ffffff'/>
         <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no'/>
-        <title>".$set[1]." | Yusr - Make Quran More Accessible.</title>
+        <title>".$set[1]." | ".$this->setting['trademark']." - ".$this->setting['tagline']."</title>
 
         <!-- <link rel='manifest' href='".urlBase."manifest.json'/> -->
         <link rel='icon' type='image/png' href='".urlBase."assets/img/favicon/icon-72x72.png'/>
@@ -122,8 +122,6 @@ class Main {
                 echo "<script src='".urlBase."assets/js/$file.js'></script>";
             }
         }
-
-        require dirBase.'system/parts/header.php';
 	}
 
     public function upload_img($source, $destination, $quality)
@@ -173,9 +171,4 @@ class Main {
             move_uploaded_file($source['tmp_name'], $destination);
         }
     }
-
-	public function close()
-    {
-		require dirBase.'system/parts/footer.php';
-	}
 }
