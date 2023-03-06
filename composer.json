@@ -1,0 +1,18 @@
+{
+    "name": "binsar/yusr",
+    "description": "Quran App",
+    "require": {
+        "phpmailer/phpmailer": "^6.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Binsar\\Yusr\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Binsar Harseno",
+            "email": "binsar@conary.id"
+        }
+    ]
+}
